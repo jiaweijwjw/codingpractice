@@ -1,4 +1,10 @@
-name = input("Please input your name: ")
-age = input("Please input your age: ")
+def somefunc(item_in_list):
+    return item_in_list+2
 
-print("Hello {1}, you are {0} years old this year".format(age, name))
+mylist = [1, 2, 3, 4, 5]
+newlist_it = map(somefunc, mylist)
+
+print(newlist_it)
+print(list(newlist_it))
+
+lambda list: True if len(list) > 0 else False
