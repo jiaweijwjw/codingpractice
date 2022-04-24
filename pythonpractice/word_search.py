@@ -1,8 +1,8 @@
-word_grid = ["helloxz",
-             "vvsoche",
-             "heohffa"]
+word_grid = ["hehloxz",
+             "vvooche",
+             "heooofa"]
 
-word = "ooo"
+word = "hoo"
 
 directions = [(-1, -1), # top left
               (-1,  0), # top
