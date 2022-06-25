@@ -61,12 +61,12 @@ class Solution():
             node = node.next
 
 
-linkedlist = LinkedList()
-for i in range(1, 6):
-    linkedlist.add_node(Node(i))
-linkedlist.print_linked_list()
-solution = Solution(linkedlist.get_head())
-solution.print_ans(solution.reverse_linkedlist())
-# reverse empty linked list
-solution = Solution()
-solution.print_ans(solution.reverse_linkedlist())
+# linkedlist = LinkedList()
+# for i in range(1, 6):
+#     linkedlist.add_node(Node(i))
+# linkedlist.print_linked_list()
+# solution = Solution(linkedlist.get_head())
+# solution.print_ans(solution.reverse_linkedlist())
+# # reverse empty linked list
+# solution = Solution()
+# solution.print_ans(solution.reverse_linkedlist())

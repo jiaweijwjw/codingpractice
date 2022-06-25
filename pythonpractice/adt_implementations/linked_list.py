@@ -11,14 +11,17 @@ class LinkedList:
         self.tail = None
         self.len = 0
 
+    def get_head(self):
+        return self.head
+
     def print_LL(self):
         if not (self.head and self.tail):
             print("Please insert some nodes before printing the linked list.")
             return
-        print(f"length of linked list is {self.len}")
-        print(f"current head is {self.head.val}")
-        print(f"current tail is {self.tail.val}")
-        print("linked list: ", end="")
+        # print(f"length of linked list is {self.len}")
+        # print(f"current head is {self.head.val}")
+        # print(f"current tail is {self.tail.val}")
+        # print("linked list: ", end="")
         curr = self.head
         while(curr):
             if curr.next: # not last node
@@ -121,19 +124,19 @@ class LinkedList:
             return itr.val
 
 
-linked_list = LinkedList()
-list_of_nodes = [Node(num**2) for num in range(1, 7)]
-for node in list_of_nodes:
-    linked_list.insert_head(node)
+# linked_list = LinkedList()
+# list_of_nodes = [Node(num**2) for num in range(1, 7)]
+# for node in list_of_nodes:
+#     linked_list.insert_head(node)
 
 
-linked_list.print_LL()
-linked_list.insert(Node(999), -1)
-linked_list.print_LL()
-linked_list.remove_tail()
-linked_list.print_LL()
-linked_list.remove_head()
-linked_list.print_LL()
-linked_list.remove(-1)
-linked_list.remove(1)
-linked_list.print_LL()
+# linked_list.print_LL()
+# linked_list.insert(Node(999), -1)
+# linked_list.print_LL()
+# linked_list.remove_tail()
+# linked_list.print_LL()
+# linked_list.remove_head()
+# linked_list.print_LL()
+# linked_list.remove(-1)
+# linked_list.remove(1)
+# linked_list.print_LL()
