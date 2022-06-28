@@ -17,18 +17,26 @@ prices = [7, 1 ,5, 3, 6, 4]
 #     return profit
 
 # using 2 pointers
+# the solution is actually very simple
+# the base case if there is only 1 price, then no profit will be made so we return profit 0 immediately
+# else, we check for the curr profit between left and right
+# if there is a negative profit, we know that the new right is the min value, and hence we set the left ptr to that value
+# if there is a positive profit, we just move right to check if there is any remaining days that can give a larger profit
+# we can just update max_profit only when there is a positive profit and we are required to return 0 if no profit can be made
 def solution(prices):
-    left_ptr = 0
-    right_ptr = 1
+    if len(prices) == 1:
+        return 0
+    left = 0
+    right = 1
     max_profit = 0
-    while right_ptr < len(prices):
-        profit = prices[right_ptr] - prices[left_ptr]
-        max_profit = max(profit, max_profit) # if the new profit is larger, update it
-        if profit < 0: # the left one is not the min
-            left_ptr = left_ptr + 1
-            right_ptr = right_ptr + 1  
+    while right < len(prices):
+        profit = prices[right] - prices[left]
+        if profit < 0:
+            left = right
+            right = left+1
         else:
-            right_ptr = right_ptr + 1
+            max_profit = max(max_profit, profit)
+            right += 1
     return max_profit
 
 # using kadane's algorithm if the array given is the profit already, not the prices

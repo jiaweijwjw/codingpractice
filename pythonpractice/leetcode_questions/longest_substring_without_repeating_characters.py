@@ -21,6 +21,7 @@ def solution(str):
     return longest_so_far
 
 # what if i store the positions too, then i take out from repeated element and before
+# to check for repeation, we can usually use a set but in this case, we use a list so we can know the index
 def solution2(str):
     longest_so_far = 0
     curr_substr_len = 0
@@ -29,12 +30,12 @@ def solution2(str):
         if str[i] not in curr_chars:
             curr_chars.append(str[i])
             curr_substr_len += 1
-            longest_so_far = max(longest_so_far, curr_substr_len)
         else: # we handle here differently as compared to solution 1
             pos = curr_chars.index(str[i])
             curr_chars = curr_chars[pos+1:] # remove everything from the front, since we appended, its in order
             curr_chars.append(str[i])
             curr_substr_len = len(curr_chars)
+        longest_so_far = max(longest_so_far, curr_substr_len)
     return longest_so_far
 
 for str in sample_strings:

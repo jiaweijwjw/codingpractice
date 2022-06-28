@@ -1,6 +1,3 @@
-from os import remove
-
-
 nums = [4, 1, 2, 1, 2]
 
 def filter(nums, nums_set):

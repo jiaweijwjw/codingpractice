@@ -23,7 +23,7 @@ def solution(n):
 
 def generate(ans, left, right, parens):
     # print(left, right, parens)
-    if left == 0 and right == 0: # (left and right) == 0 somehow this is correct when i test below, but not correct when i test in leetcode
+    if left == 0 and right == 0:
         ans.append(parens)
         return
         # DONT FORGET TO TERMINATE HERE OR IT WILL GO INTO THE NEXT IF CLAUSE
@@ -37,11 +37,3 @@ def generate(ans, left, right, parens):
 
 for n in num_of_parentheses:
     print(solution(n))
-
-
-left = 0
-right = 0
-if (left and right) == 0:
-    print("yes1")
-if left == 0 and right == 0:
-    print("yes2")

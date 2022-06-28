@@ -1,5 +1,7 @@
 to_be_sorted = [2, 8, 5, 3, 9, 4, 7, 1]
 
+# This is achieved by simply comparing the front of the two arrays and take the smaller of the two at all times. 
+# However, this simple but fast O(N) merge sub-routine will need additional array to do this merging correctly.
 def merge(left_array, right_array):
     merged_array = []
     while left_array and right_array:

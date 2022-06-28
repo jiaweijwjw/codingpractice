@@ -35,7 +35,7 @@ num_arr = [-2,1,-3,4,-1,2,1,-5,4] # answer should be 6
 #         if new_sum  < curr_sum: # adding this new number makes the sum smaller
 
 # geekforgeeks code:
-def solution(num_arr):
+def solution2(num_arr):
     max_so_far = -inf
     max_ending_here = 0
     for num in num_arr:
@@ -46,6 +46,36 @@ def solution(num_arr):
             max_ending_here = 0
     return max_so_far
 
+
+# we will start from the first 2 item, using left and right ptr
+# the idea is that if the sum = curr_sum + new number is less than the curr sum, we can ignore everything in front
+# we do this by setting left to the right
+# else, we will continue expand the window by only shifting the right pointer
+# the benefit of this 2 pointers is that we can also return the index of the start and end of the max subarray
+def solution(nums):
+    if len(nums) == 1:
+        return nums[0]
+    left = 0
+    right = 1
+    start, end = 0, 0 # index for the start and end of maximum subarray
+    # init
+    curr_sum = nums[left]
+    max_sum = curr_sum
+    while right < len(nums):
+        sum = curr_sum + nums[right]
+        if sum < nums[right]: # extend both left and right, ignoring everything on the left
+            curr_sum = nums[right]
+            left = right
+            right = left+1
+        else: # extend right
+            curr_sum = sum
+            right += 1
+        if curr_sum > max_sum:
+            max_sum = curr_sum
+            start, end = left, right
+    print(start, end)
+    return max_sum
+        
 
 print(solution(num_arr))
 

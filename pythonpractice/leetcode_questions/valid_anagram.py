@@ -1,6 +1,13 @@
 s = "anagram"
 t = "nagaram"
 
+# since the idea of this questions is to check whether every char in a string exists in another string,
+# we can usually check existence by first putting all the available chars of the first string in a dict
+# then for every char in the second string, we check if there is the char currently available in the dict
+# if it is, then we take it out
+# at any one time, if there is missing character, we can return the function early
+# else if all the characters in string2 is already popped out from the dict, if there is any remaining items, we return False
+# if not, the 2 strings are anagrams
 def solution(s, t):
     if len(s) != len(t): # exit early
         return False

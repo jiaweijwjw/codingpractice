@@ -44,8 +44,10 @@ def binary_search_rotated(nums, target, start, end, mid):
             return binary_search_rotated(nums, target, start, end, mid)
 
 print(solution2(nums, target))
+
 # the following solution firstly takes up extra space
 # secondly, doesnt work for some edge cases
+# use solution2 instead
 def solution(nums, target):
     target_index = None
     # edge cases

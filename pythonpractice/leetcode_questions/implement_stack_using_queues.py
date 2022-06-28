@@ -3,7 +3,7 @@ from queue import Queue
 # either using 1 queue whereby we rotate
 # or we use 2 queues where by we just alternate the queues to push into
 # however in both cases, either push or pop will be O(n)
-# hwoever for the 2 queues one, top() also O(n), and also 2 queues are used.
+# however for the 2 queues one, top() also O(n), and also 2 queues are used.
 # # even though stores the same num of elements as one queue will always be empty
 
 # this will be the one queue implementation as the 2 queue one is not difficult to visualize

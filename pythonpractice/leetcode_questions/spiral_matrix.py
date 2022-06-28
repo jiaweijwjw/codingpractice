@@ -5,6 +5,7 @@ matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
 # matrix = [[1,2,3,4]]
 # matrix = [[1]]
 
+# i think a better way to do this is to use a list of tuples (x, y)
 class Direction(enum.Enum):
     right = (1, 0) # (x, y) direction
     down = (0, 1)

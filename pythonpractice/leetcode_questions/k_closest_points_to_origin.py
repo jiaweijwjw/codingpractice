@@ -1,5 +1,5 @@
 from math import sqrt
-from heapq import heappush, heappop, nsmallest
+from heapq import heappush, nsmallest
 points = [[3,3],[5,-1],[-2,4]]
 k = 2
 
@@ -19,7 +19,5 @@ class Solution():
             heappush(self.heap, (self.calc_dist(x, y), point))
         return [point[1] for point in nsmallest(k, self.heap)]
         
-
-
 solution = Solution(points, k)
 print(solution.get_k_closest_points_to_origin())
