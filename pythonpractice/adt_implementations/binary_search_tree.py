@@ -108,7 +108,7 @@ class BST():
                 return node1
             else:
                 return
-        
+        return root # if none of the cases, maybe BST only has 1 item
             
 
     def insert_node(self, node):
