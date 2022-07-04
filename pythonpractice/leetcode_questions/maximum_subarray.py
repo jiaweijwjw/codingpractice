@@ -1,3 +1,4 @@
+from math import inf
 num_arr = [-2,1,-3,4,-1,2,1,-5,4] # answer should be 6
 # num_arr = [-3, 2, -5, 1, 1, 1]
 # num_arr = [1, -2]
@@ -45,8 +46,20 @@ def solution(nums):
 # hence we can ignore the previous stuff and move the left pointer. 
 # moving the left pointer is like "resetting" the subarray
 
+
+# this solution is slightly faster than the above
+def solution2(nums):
+    if len(nums) == 1:
+        return nums[0]
+    max_sum = -inf
+    curr_sum = 0
+    for num in nums:
+        curr_sum = max(curr_sum + num, num)
+        max_sum = max(max_sum, curr_sum)
+    return max_sum
+
 if __name__ == "__main__":
-    print(solution(num_arr))    
+    print(solution2(num_arr))    
 
 
 # comments:
