@@ -2,19 +2,13 @@ from math import inf
 
 prices = [7, 1 ,5, 3, 6, 4]
 
-# following doesnt work as it is just using the very simple idea of finding the max and min
-# def solution(prices):
-#     profit = 0
-#     min_price_index = (None, None) # (price, index)
-#     max_price_index = (None, None)
-#     for i in range(len(prices)):
-#         if min_price_index == (None, None) or prices[i] < min_price_index[0]:
-#             min_price_index = (prices[i], i)
-#     for j in range(min_price_index[1], len(prices)):
-#         if max_price_index == (None, None) or prices[i] > max_price_index[0]:
-#             max_price_index = (prices[j], j)
-#     profit = max_price_index[1] - min_price_index[1]
-#     return profit
+# when we start doing this question, we will first think of it as a very simple question of finding the max and min
+# then getting the difference between them
+# however, since we only want profits, meaning if the max is before the min, this solution will not work out.
+# this simple solution is coded out at the end of this script.
+
+# if we dont know what method to use for this, we can try to recall what kind of methods can array questions use.
+# this looks like a 2 pointers method to keep track of the min and current.
 
 # using 2 pointers
 # the solution is actually very simple
@@ -53,3 +47,17 @@ def solution2(prices):
 
 print(solution(prices))
 print(solution2(prices))
+
+# following doesnt work as it is just using the very simple idea of finding the max and min
+# def solution(prices):
+#     profit = 0
+#     min_price_index = (None, None) # (price, index)
+#     max_price_index = (None, None)
+#     for i in range(len(prices)):
+#         if min_price_index == (None, None) or prices[i] < min_price_index[0]:
+#             min_price_index = (prices[i], i)
+#     for j in range(min_price_index[1], len(prices)):
+#         if max_price_index == (None, None) or prices[i] > max_price_index[0]:
+#             max_price_index = (prices[j], j)
+#     profit = max_price_index[1] - min_price_index[1]
+#     return profit
