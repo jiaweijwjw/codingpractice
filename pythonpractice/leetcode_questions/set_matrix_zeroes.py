@@ -1,5 +1,9 @@
 # matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
-matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+# matrix = [[0,1,2,0],
+#           [3,4,5,2],
+#           [1,3,1,5]]
+
+matrix = [[1,1,1],[1,0,1],[1,1,1]]
 
 class Solution():
     def __init__(self, matrix) -> None:
@@ -10,15 +14,16 @@ class Solution():
     def print_matrix(self):
         for row in self.matrix:
             print(row)
+        print()
 
     def set_zeroes(self):
-        col_to_zeroes = []
-        row_to_zeroes = []
+        col_to_zeroes = set()
+        row_to_zeroes = set()
         for r in range(self.num_of_rows):
             for c in range(self.num_of_cols):
-                if self.matrix[r][c] == 0:
-                    row_to_zeroes.append(r)
-                    col_to_zeroes.append(c)
+                if self.matrix[r][c] == 0: # cannot exit early as we have to check every cell
+                    row_to_zeroes.add(r)
+                    col_to_zeroes.add(c)
         for row in range(self.num_of_rows):
             if row in row_to_zeroes:
                 self.matrix[row] = [0]*self.num_of_cols
@@ -45,7 +50,8 @@ class Solution():
                     break # exit checking the remaining cols in this row (this break only exits the inner for loop)
 
 
+
 solution = Solution(matrix)
 solution.print_matrix()
-solution.set_zeroes()
+solution.set_zeroes3()
 solution.print_matrix()
