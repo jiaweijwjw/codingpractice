@@ -1,6 +1,12 @@
 s = "anagram"
 t = "nagaram"
 
+# to check if 2 strings are anagrams, there are a few ways, but we will look at the 2 common ways
+# the first way is to sort both strings and check if they produce the same resulting string
+# the time complexity is O(NlogN) and the space complexity would be O(N) (python's timsort)
+# the next method is to do frequency counting of characters
+# this will take O(N) time and O(1) space. O(1) because number of characters in character set is countable
+
 # since the idea of this questions is to check whether every char in a string exists in another string,
 # we can usually check existence by first putting all the available chars of the first string in a dict
 # then for every char in the second string, we check if there is the char currently available in the dict

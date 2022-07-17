@@ -1,5 +1,10 @@
 from curses.ascii import isalnum
 
+# we can reverse a string and see if it is equal to itself
+# another way is to use 2 pointers from the front and back and check for equality
+# both is O(N) but the second method can exit early and allows for slightly faster time
+# if we want to count the number of palindromes, we can also start from the middle and go outwards
+
 sample_strings = [
     "A man, a plan, a canal: Panama", # true
     "race a car", # false
