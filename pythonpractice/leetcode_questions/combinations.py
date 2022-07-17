@@ -1,4 +1,4 @@
-n, k = 4, 3
+n, k = 4, 2
 
 # the following solution creates multiple of the same tree, we can actually try another method that uses backtracking on the same tree
 def solution(n, k):
@@ -20,7 +20,23 @@ def combinate(ans, n, k, combi):
         combinate(ans, i, k, combi[:]) # if pass in like that, it will reuse the combi from the previous loop!!!
         # combi.pop(k-1) # this line would not work as it is too hard code
 
-print(solution(n, k))
+# solution 2 is exactly the same method as above but a much more cleaner code
+def solution2(n, k):
+    ans = []
+    combinate2(ans, n, k, [])
+    return ans
+
+def combinate2(ans, n, k, combi):
+    print(combi)
+    if len(combi) == k:
+        ans.append(combi)
+        return
+    for i in range(n, 0, -1):
+        clone_combi = combi[:]
+        clone_combi.append(i)
+        combinate2(ans, i-1, k, clone_combi)
+
+print(solution2(n, k))
 
 
 # some comments for backtracking:

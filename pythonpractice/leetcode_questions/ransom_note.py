@@ -7,6 +7,7 @@ magazine = "aab"
 # then for each char in ransomNote, we try to find the char in char_bank
 # if it does not exist, we can exit early
 # else if at the end of the iteration, and there is no early exit, it means that ransomNote can be constructed from chars in char_bank
+# this solution is exactly the same as valid anagram but it is okay to have remaining items in the dict
 def solution(ransomNote, magazine):
     char_bank = {}
     for char in magazine:
