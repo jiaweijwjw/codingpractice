@@ -54,12 +54,12 @@ class Solution():
 
     def has_cycle(self):
         if not self.head:
-            return "empty linked list"
+            return False
         slow, fast = self.head, self.head
-        while fast and fast.next:
+        while fast and fast.next: # fast.next.next?
             slow = slow.next
             fast = fast.next.next
-            if fast == slow: # why must this be after?
+            if fast == slow: # why must this be after? if not first iteration will be true since both pointing to head
                 return True
         return False
 
