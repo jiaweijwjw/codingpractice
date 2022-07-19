@@ -1,4 +1,3 @@
-from collections import deque
 class Node():
     def __init__(self, val) -> None:
         self.val = val
@@ -6,106 +5,60 @@ class Node():
         self.right = None
 
 def build_tree():
-    root = Node(5)
-    root.left = Node(4)
-    root.right = Node(6)
-    root.right.left = Node(3)
-    root.right.right = Node(7)
+    root = Node(1)
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.left.right = Node(5)
+    root.right.right = Node(6)
     return root
-
 
 class BinaryTree():
     def __init__(self, root) -> None:
         self.root = root
 
-    # inorder, preorder and postorder traversals are all depth first search traversals
-    # inorder is left, root, right
-    # preorder is root, left, right
-    # postorder is left, right, root
-    def print_inorder(self):
-        inorder_list = []
-        self._inorder_traversal(self.root, inorder_list)
-        print(inorder_list)
-
-    def _inorder_traversal(self, node, inorder_list):
-        if not node:
-            return
-        self._inorder_traversal(node.left, inorder_list)
-        inorder_list.append(node.val)
-        self._inorder_traversal(node.right, inorder_list)
-
     def print_preorder(self):
         preorder_list = []
-        self._preoder_traversal(self.root, preorder_list)
+        self._preorder_traversal(self.root, preorder_list)
         print(preorder_list)
-        
-    def _preoder_traversal(self, node, preorder_list):
+
+    def _preorder_traversal(self, node, preorder_list):
         if not node:
             return
+        self._preorder_traversal(node.left, preorder_list)
         preorder_list.append(node.val)
-        self._preoder_traversal(node.left, preorder_list)
-        self._preoder_traversal(node.right, preorder_list)
+        self._preorder_traversal(node.right, preorder_list)
 
-    def print_postorder(self):
-        postorder_list = []
-        self._postorder_traversal(self.root, postorder_list)
-        print(postorder_list)
+    def get_max_height(self):
+        if not self.root:
+            return 0
+        return self._find_max_height(self.root, 1)
 
-    def _postorder_traversal(self, node, postorder_list):
+    def _find_max_height(self, node, height):
         if not node:
-            return
-        self._postorder_traversal(node.left, postorder_list)
-        self._postorder_traversal(node.right, postorder_list)
-        postorder_list.append(node.val)
+            return height-1 # since already added when we came in this node
+        height = max(self._find_max_height(node.left, height+1), self._find_max_height(node.right, height+1))
+        return height
 
-    def print_bfs_order(self):
-        bfs_list = []
-        self._bfs_traversal(self.root, bfs_list)
-        print(bfs_list)
+    def invert_binary_tree(self):
+        self._invert(self.root)
 
-    def _bfs_traversal(self, root, bfs_list):
-        q = deque() # queue
-        q.append(root)
-        while q:
-            node = q.popleft()
-            if not node:
-                continue
-            bfs_list.append(node.val)
-            if node.left:
-                q.append(node.left)
-            if node.right:
-                q.append(node.right)
-
-    def print_inorder_iterative(self):
-        inorder_list = []
-        self._inorder_traversal_iterative(self.root, inorder_list)
-        print(inorder_list)
-
-    def _inorder_traversal_iterative(self, root, inorder_list):
-        s = deque() # stack
-        curr = root
-        while True:
-            if curr:
-                s.append(curr)
-                curr = curr.left
-            else: # curr is None
-                if s:
-                    curr = s.pop()
-                    inorder_list.append(curr.val)
-                    s.append(curr.right)
-                else:
-                    break
-            
-            
-
-
-
+    def _invert(self, node):
+        if not node: # this line is important to handle the case whereby a node only has one child and the other child is None
+            return node
+        if not node.left and not node.right: # leaf node, no need swap the child
+            return node
+        # none leaf node, swap the child
+        temp_left = self._invert(node.right)
+        temp_right = self._invert(node.left)
+        node.left = temp_left
+        node.right = temp_right
+        return node
 
 
 if __name__ == "__main__":
     tree = BinaryTree(build_tree())
-    tree.print_inorder()
+    print(tree.get_max_height())
     tree.print_preorder()
-    tree.print_postorder()
-    tree.print_bfs_order()
-    tree.print_inorder_iterative()
+    tree.invert_binary_tree()
+    tree.print_preorder()
