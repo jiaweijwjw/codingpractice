@@ -1,5 +1,5 @@
 import enum
-from queue import Queue
+from collections import deque
 
 grid = [
   ["1","1","0","0","0"],
@@ -8,57 +8,68 @@ grid = [
   ["0","0","0","1","1"]
 ]
 
-class Dir(enum.Enum):
-    up = 0, -1 # dont need to put brackets here, also no need brackets
-    right = 1, 0 # each of this is an enum
+class Dir(enum.Enum): # (x, y) or (c, r)
+    right = 1, 0
     down = 0, 1
     left = -1, 0
+    up = 0, -1
 
-def solution(grid):
-    num_of_islands = 0
-    visited = set()
-    for x in range(len(grid[0])): # cols
-        for y in range(len(grid)): # rows
-            if (x, y) not in visited and grid[y][x] == "1":
-                bfs(grid, x, y, visited) # each bfs algo will cover one island
-                num_of_islands += 1
-    return num_of_islands
+class Solution():
+    def __init__(self, grid) -> None:
+        self.grid = grid
 
-# visited will be marked here, so that in the main solution function, it will be skipped
-def bfs(grid, x, y, visited):
-    q = Queue()
-    q.put((x, y)) # remember that x is columns and y is rows
-    while not q.empty():
-        print(list(q.queue))
-        curr_pos = q.get()
-        print(curr_pos)
-        if curr_pos in visited:
-            continue # move on to the next item in the queue
-        else: # not yet visited
-            visited.add(curr_pos) # careful dont reuse x, y
-            for dir in Dir:
-                neighbour = tuple(sum(coord) for coord in zip(curr_pos, dir.value))
-                if (0 <= neighbour[0] < len(grid[0])) and (0 <= neighbour[1] < len(grid)) and (neighbour not in visited) and (grid[neighbour[1]][neighbour[0]] == "1"): # not out of grid
-                    q.put(neighbour)
+    def get_number_of_islands(self) -> int:
+        num_of_islands = 0
+        visited = set() # we store (c, r) in visited
+        for r in range(len(self.grid)):
+            for c in range(len(self.grid[0])):
+                if self.grid[r][c] == "1" and (c, r) not in visited:
+                    self.bfs(self.grid, r, c, visited)
+                    num_of_islands += 1
+        return num_of_islands
+        
 
-def solution2(grid):
-    num_of_islands = 0
-    visited = set()
-    for x in range(len(grid[0])):
-        for y in range(len(grid)):
-            if (x, y) not in visited and grid[y][x] == "1":
-                dfs(grid, x, y, visited)
-                print(visited)
-                num_of_islands += 1
-    return num_of_islands
+    def bfs(self, grid, r, c, visited):
+        q = deque()
+        q.append((c, r))
+        while q:
+            cell = q.popleft()
+            if cell not in visited: # this line is important for very big cases, to not run into TLE
+                visited.add(cell)
+                for dir in Dir:
+                    neighbour = tuple(sum(coord) for coord in zip(cell, dir.value))
+                    if neighbour not in visited and self._within_boundaries(neighbour) and grid[neighbour[1]][neighbour[0]] == "1": # check in visited to not get into endless loops
+                        q.append(neighbour)
 
-def dfs(grid, x, y, visited):
-    visited.add((x, y))
-    print((x, y))
-    for dir in Dir:
-        neighbour = tuple(sum(coord) for coord in zip((x, y), dir.value))
-        # when accessing grids, make sure to check for boundaries before the other conditions
-        if 0 <= neighbour[0] < len(grid[0]) and 0 <= neighbour[1] < len(grid) and grid[neighbour[1]][neighbour[0]] == "1" and neighbour not in visited:
-            dfs(grid, neighbour[0], neighbour[1], visited)
+    def _within_boundaries(self, cell) -> bool: # cell of (c, r)
+        col = cell[0]
+        row = cell[1]
+        if 0 <= col <= len(self.grid[0])-1 and 0 <= row <= len(self.grid)-1:
+            return True
+        else:
+            return False
 
-print(solution2(grid))
+    # we can write dfs with recursion so it is easier to write
+    # we change the values of the cell that we have already visited, so we no need a visited set, save space
+    def get_number_of_islands_dfs(self):
+        num_of_islands = 0
+        for r in range(len(self.grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == "1":
+                    self.dfs(self.grid, r, c)
+                    num_of_islands += 1
+        return num_of_islands
+
+    def dfs(self, grid, r, c):
+        if len(grid)-1 < r or r < 0 or len(grid[0])-1 < c or c < 0 or grid[r][c] != "1":
+            return
+        grid[r][c] = "#"
+        for dir in Dir:
+            self.dfs(grid, r+dir.value[1], c+dir.value[0])
+
+
+
+if __name__ == "__main__":
+    solution = Solution(grid)
+    print(solution.get_number_of_islands())
+    print(solution.get_number_of_islands_dfs())

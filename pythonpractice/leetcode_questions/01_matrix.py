@@ -1,86 +1,58 @@
 import enum
-from queue import Queue
-from math import inf
+from collections import deque
 
-matrix = [[0,0,0],
-          [0,1,0],
-          [1,1,1]]
+grid= [[0,0,0], # [[0,0,0]
+       [0,1,0], #  [0,1,0]
+       [1,1,1]] #  [1,2,1]]
 
-class Dir(enum.Enum):
-    up = 0, -1
+class Dir(enum.Enum): # (c, r)
     right = 1, 0
     down = 0, 1
-    left = -1, 0
+    left = -1 ,0
+    up = 0, -1
 
-def solution(matrix):
-    # dist_matrix = [[0]*len(matrix[0])]*len(matrix) # this kind of assignment will reuse the list for the remaining rows which will cause the other rows to be edited when u only edited one of the row
-    dist_matrix = [[0]*len(matrix[0]) for i in range(len(matrix))]
-    for r in range(len(matrix)):
-        for c in range(len(matrix[0])):
-            if matrix[r][c] != 0:
-                bfs(matrix, dist_matrix, (c, r))
-                print()
-    return dist_matrix
+# although this solution works, it will enter TLE error for very big cases
+# because the general idea of this solution is that we find all the 1s and do BFS from that 1 as a source to find the nearest 0
+# imagine we got a very big grid with only a single corner cell as 0, for each 1 to find that corner 0, it would take a long time
+class Solution():
+    def __init__(self, grid) -> None:
+        self.grid = grid
+        self.dist_matrix = [[0 for _ in range(len(grid[0]))] for _ in range(len(grid))] # create a 0 matrix to store the ans
 
-def dfs(matrix, dist_matrix, coord):
-    q = [] # stack
-    visited = set() # put visited here so every iteration of bfs will have a new visited
-    min_dist = inf
-    dist = -1 # first one dont count as a step
-    q.append(coord)
-    while q:
-        print(q)
-        curr = q.pop()
-        print("curr:", curr)
-        visited.add(curr)
-        dist += 1
-        if matrix[curr[1]][curr[0]] == 0:
-            print(dist)
-            visited.remove(curr)
-            if dist < min_dist:
-                min_dist = dist
-            dist -= 1
-            print(dist)
-            continue
-        for dir in Dir:
-            neighbour = tuple(sum(i) for i in zip(curr, dir.value))
-            if 0 <= neighbour[0] < len(matrix[0]) and 0 <= neighbour[1] < len(matrix) and neighbour not in visited:
-                q.append(neighbour)
-    dist_matrix[coord[1]][coord[0]] = min_dist
-    print(dist_matrix[coord[1]][coord[0]])
-    for row in dist_matrix:
-        print(row)
-    return
+    def find_nearest_zero(self):
+        for r in range(len(self.grid)):
+            for c in range(len(self.grid[0])):
+                if self.grid[r][c] != 0:
+                    self._bfs(r, c)
+        return self.dist_matrix
 
-def bfs(matrix, dist_matrix, coord):
-    q = Queue()
-    visited = set() # put visited here so every iteration of bfs will have a new visited
-    # first one dont count as a step, so start with -1
-    q.put((coord, -1)) # the kind of question that need to store a state up till a certain node, need to pass value into child
-    # if we are diong recursively, we usually pass in through function params. in this case, we store in the queue together with the coord
-    while not q.empty():
-        print(list(q.queue))
-        curr, curr_dist = q.get()
-        print("curr: ", curr)
-        print("curr_dist: ", curr_dist)
-        curr_dist += 1
-        visited.add(curr)
-        if matrix[curr[1]][curr[0]] == 0:
-            dist_matrix[coord[1]][coord[0]] = curr_dist
-            for row in dist_matrix:
-                print(row)
-            return
-        for dir in Dir:
-            neighbour = tuple(sum(i) for i in zip(curr, dir.value))
-            if 0 <= neighbour[0] < len(matrix[0]) and 0 <= neighbour[1] < len(matrix) and neighbour not in visited:
-                q.put((neighbour, curr_dist))
+    # since bfs is not recursive, we cannot pass dist as argument
+    def _bfs(self, r, c):
+        visited = set() # we set the visited here as we need to reset it for every bfs iteration
+        q = deque()
+        q.append(((c, r), -1)) # cell, dist
+        while q:
+            cell, dist = q.popleft()
+            if cell not in visited:
+                dist += 1
+                if self.grid[cell[1]][cell[0]] == 0:
+                    self.dist_matrix[r][c] = dist
+                    break # no need search any further
+                visited.add(cell)
+                for dir in Dir:
+                    neighbour = tuple(sum(coord) for coord in zip(cell, dir.value))
+                    if neighbour not in visited and self._within_bounds(neighbour):
+                        q.append((neighbour, dist))
 
-print(solution(matrix))
+    def _within_bounds(self, cell):
+        c, r = cell[0], cell[1]
+        if 0 <= r <= len(self.grid)-1 and 0 <= c <= len(self.grid[0])-1:
+            return True
+        else:
+            return False
 
-q = Queue()
-a = ((1,2), 5)
-q.put(a) 
-q.put(((1,2), 5)) 
-print(list(q.queue))
-tup, dist = q.get()
-print(tup, dist)
+    
+
+if __name__ == "__main__":
+    solution = Solution(grid)
+    print(solution.find_nearest_zero())
