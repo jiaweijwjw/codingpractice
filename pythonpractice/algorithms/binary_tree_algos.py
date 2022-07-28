@@ -55,6 +55,20 @@ class BinaryTree():
         node.right = temp_right
         return node
 
+    def find_LCA(self, node1, node2):
+        return self._find_LCA(self.root, node1, node2)
+
+    def _find_LCA(self, root, node1, node2):
+        if not root:
+            return
+        if root.val == node1.val or root.val == node2.val:
+            return root
+        left = self._find_LCA(root.left, node1, node2)
+        right = self._find_LCA(root.right, node1, node2)
+        if left and right:
+            return root
+        else:
+            return left or right
 
 if __name__ == "__main__":
     tree = BinaryTree(build_tree())
@@ -62,3 +76,6 @@ if __name__ == "__main__":
     tree.print_preorder()
     tree.invert_binary_tree()
     tree.print_preorder()
+    lca = tree.find_LCA(Node(3), Node(7))
+    if lca:
+        print(lca.val)
