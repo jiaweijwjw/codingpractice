@@ -33,7 +33,7 @@ class Solution():
 
     def _dfs_traverse(self, node1, node2):
         if not node1 and not node2:
-            return True
+            return True # MUST return true, if not it will just return None
         elif not node1 or not node2:
             return False
         elif node1.val != node2.val:

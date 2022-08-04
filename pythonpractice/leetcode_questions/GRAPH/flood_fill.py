@@ -1,32 +1,78 @@
-import enum
-from turtle import down, left, right
+from collections import deque
 
-image = [[1,1,1],
-        [1,1,0],
-        [1,0,1]]
-sr = 1
-sc = 1
-color = 2
+directions = [(0,1), (1,0), (0,-1), (-1,0)]
 
-class Dir(enum.Enum):
-    up = 0, -1
-    right = 1, 0
-    down = 0, 1
-    left = -1, 0
+class Solution():
+    def __init__(self) -> None:
+        pass
 
-def solution(image, sr, sc, color):
-    visited = set()
-    dfs_fill(image, (sc, sr), color, image[sr][sc], visited) # becareful again, row is y, col is x
-    return image
+    def _within_bounds(self, image, r, c):
+        return 0 <= r <= len(image)-1 and 0 <= c <= len(image[0])-1
 
-def dfs_fill(image, coord, color, original_color, visited):
-    visited.add(coord)
-    image[coord[1]][coord[0]] = color
-    for dir in Dir:
-        neighbour = tuple(sum(i) for i in zip(coord, dir.value))
-        if 0 <= neighbour[0] < len(image[0]) and 0 <= neighbour[1] < len(image) and neighbour not in visited and image[neighbour[1]][neighbour[0]] == original_color:
-            dfs_fill(image, neighbour, color, original_color, visited)
+    def flood_fill_bfs(self, image, sr, sc, color):
+        starting_color = image[sr][sc]
+        q = deque()
+        visited = set()
+        q.append((sc, sr))
+        while q:
+            c, r = q.popleft()
+            if (c, r) not in visited:
+                visited.add((c, r))
+                image[r][c] = color
+                for dir in directions:
+                    neighbour_c = c+dir[0]
+                    neighbour_r = r+dir[1]
+                    if self._within_bounds(image, neighbour_r, neighbour_c) and image[neighbour_r][neighbour_c] == starting_color:
+                        q.append((neighbour_c, neighbour_r))
+        return image
 
-print(image)
-print()
-print(solution(image, sr, sc, color))
+    def flood_fill_dfs(self, image, sr, sc, color):
+        visited = set()
+        starting_color = image[sr][sc]
+        def dfs(image, r, c, color):
+            nonlocal visited, starting_color
+            if image[r][c] != starting_color:
+                return
+            visited.add((c, r))
+            image[r][c] = color
+            for dir in directions:
+                neighbour_c = c+dir[0]
+                neighbour_r = r+dir[1]
+                if self._within_bounds(image, neighbour_r, neighbour_c) and (neighbour_c, neighbour_r) not in visited and image[neighbour_r][neighbour_c] == starting_color:
+                    dfs(image, neighbour_r, neighbour_c, color)
+        dfs(image, sr, sc, color)
+        return image
+
+    def flood_fill_dfs_iterative(self, image, sr, sc, color):
+        starting_color = image[sr][sc]
+        s = deque()
+        visited = set()
+        s.append((sc, sr))
+        while s:
+            c, r = s.pop()
+            if (c, r) not in visited:
+                visited.add((c, r))
+                image[r][c] = color
+                for dir in directions:
+                    neighbour_c = c+dir[0]
+                    neighbour_r = r+dir[1]
+                    if self._within_bounds(image, neighbour_r, neighbour_c) and image[neighbour_r][neighbour_c] == starting_color:
+                        s.append((neighbour_c, neighbour_r))
+        return image
+
+    def print_image(self, image):
+        for row in image:
+            print(row)
+        print()
+
+if __name__ == "__main__":
+    solution = Solution()
+    image = [[1,1,1],
+             [1,1,0],
+             [1,0,1]]
+    sr = 1
+    sc = 1
+    color = 2
+    # solution.print_image(solution.flood_fill_bfs(image, sr, sc, color))
+    # solution.print_image(solution.flood_fill_dfs(image, sr, sc, color))
+    solution.print_image(solution.flood_fill_dfs_iterative(image, sr, sc, color))
