@@ -1,0 +1,57 @@
+given input of 1 or 0, return the opposite. Come up with 5 unique solutions
+
+eg. using if else is considered 1 solution
+
+
+
+
+come up with an event listener class that u can add new function via key/ value, remove function, and call function using assigned key
+
+e.g. eventListener.assign("key", function)  // this assigns function to "key"
+eventListener.call("key", extra_args) // this calls function assigned to "key" and pass in extra_args to the function
+evetnListener.remove("key") // this removes the function assigned to "key"
+
+
+
+
+
+given an image (in black and white), count the number of black circles
+
+e.g. take it as the image is represented as a 2d array
+[[1, 0]
+ [0, 1]], has 2 black circles
+
+[[1, 1, 0],
+ [1, 0, 1]] jas 2 black circles
+
+
+ given an input of an array of relationship
+
+e.g. 
+["a-b", "b-c", "d-e"]
+
+return it in the following format
+
+[
+{
+  node: "a",
+  children: {
+                      node: "b",
+                      link: "a-b",
+                      children: {
+                                           node: "c",
+                                           link: "a-b-c",
+                                           children: {}
+                                         }
+                     },
+  link: {},
+},
+{
+  node: "d",
+  children: {
+                      node: "e",
+                      link: "d-e",
+                      children: {}
+                    }
+}
+]

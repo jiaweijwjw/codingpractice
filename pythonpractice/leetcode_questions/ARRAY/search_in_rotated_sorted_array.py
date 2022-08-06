@@ -31,15 +31,27 @@ class Solution():
     def search_in_rotated_sorted_array(self, target):
         return self._modified_binary_search(self.nums, target, start=0, end=len(self.nums)-1, mid=(len(self.nums)-1)//2)
 
-
+    # the conditional check is very strict on the equality sign
+    # also, the condition to check for search left or search right is tricky, look at the 2 lines that does not work
+    # althought it looks the same, it will not work for some cases
+    # this is because we assumed that the binary search is always done on a rotated sorted array
+    # however, in some cases, when we search left or right, the remaining portion to be search is a full sorted array, not rotated
+    # as a rule of thumb, use the condition check to check if the target is out of range of the line that mid is lying on
+    # you will have to draw the line graph to be able to visualize this
+    # for example, if mid is on the left sorted array, since mid is lying on the same line as start, we check target < start
+    # and if mid is on the right sorted array, since mid is lying on the same line as end, we check target > end
+    # manually write out the following test case: [4,5,6,7,0,1,2] and search for 0. 
+    # if using the wrong conditional check, when checking for 0 in [0,1,2], the next search will incorrectly call search right instead of left.
     def _modified_binary_search(self, arr, target, start, end, mid):
         if start > end: # target not existent in array
             return -1
         if arr[mid] == target: # found
             return mid
-        if arr[mid] >= arr[start]: # mid is in the left sorted array
+        if arr[mid] >= arr[start]: 
+            # mid is in the left sorted array
             # consider [4,5,6,7,8,9,0,1,2]
             if target > arr[mid] or target < arr[start]: # search right
+                # if target > arr[mid] or target <= arr[end]: this does not work
                 start = mid+1
                 mid = (start+end)//2
                 return self._modified_binary_search(arr, target, start, end, mid)
@@ -47,9 +59,11 @@ class Solution():
                 end = mid-1
                 mid = (start+end)//2
                 return self._modified_binary_search(arr, target, start, end, mid)
-        elif arr[mid] < arr[start]: # mid is in the right sorted array
+        elif arr[mid] < arr[start]: # can just use else statement
+            # mid is in the right sorted array
             # consider [7,8,9,0,1,2,3,4,5]
             if target < arr[mid] or target > arr[end]: # search left
+                # if target < arr[mid] or target >= arr[start]: this does not work
                 end = mid-1
                 mid = (start+end)//2
                 return self._modified_binary_search(arr, target, start, end, mid)
