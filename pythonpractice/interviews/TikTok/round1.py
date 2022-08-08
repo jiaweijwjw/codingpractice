@@ -1,3 +1,7 @@
+# given a list of integer, which represents the height of bars and the arrangement of the bars
+# considering the width of each bar is 1
+# calculate the maximum area of the rectangle that can be form by these bar
+
 from math import inf
 
 class Solution():
