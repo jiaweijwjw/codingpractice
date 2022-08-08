@@ -1,3 +1,3 @@
-forward = [1,2,3,4,5]
-reverse = forward[::-1]
-print(reverse)
+mylist = [1,2,3]
+a, b = mylist
+print(a, b)
