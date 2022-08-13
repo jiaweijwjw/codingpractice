@@ -60,11 +60,24 @@ def solution3(str):
         # but for the dict, we didnt remove it
         # for example in "abcba", when 'b' is seen again, start moves to index 1. 
         # when the second 'a' is seen, the previous 'a' is still in the dictionary with index 0, but we already ignore this as start is at index 1
-        if str[i] in curr_chars and curr_chars[str[i]] >= start: # repeated char
+        if str[i] in curr_chars and curr_chars[str[i]] >= start: # repeated char. the second part of checking is to check if it is within the current substring/window we are looking at
             start = curr_chars[str[i]]+1 # move start to the next char after the previous repeated char
         curr_chars[str[i]] = i # set the index of the new char
         longest_substr_len = max(longest_substr_len, i-start+1)
     return longest_substr_len
+
+# clean and easy to read solution3
+def solution4(str):
+    longest = 0
+    start = 0
+    curr_chars = {}
+    for i in range(len(str)):
+        if str[i] in curr_chars and curr_chars[str[i]] >= start:
+            start = curr_chars[str[i]] + 1
+        curr_chars[str[i]] = i
+        longest = max(longest, i-start+1)
+    return longest
+
 
 
 
@@ -76,3 +89,6 @@ for str in sample_strings:
 print()
 for str in sample_strings:
     print(solution3(str))
+print()
+for str in sample_strings:
+    print(solution4(str))

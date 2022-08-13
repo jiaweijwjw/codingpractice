@@ -31,14 +31,23 @@ class Solution():
 
     def remove_nth_node_from_end(self, n):
         fast = slow = head = self.linked_list_head
-        for _ in range(n): # assume that n is smaller than the length of the linked list
+        # use dummy if want do stitching for all cases
+        # exit early for during fast ptr incrementation if want to account for n > linked list length
+        # use slow.next = fast does not work why?
+
+        # slow = fast = dummy = Node(None)
+        # dummy.next = head
+        slow = fast = head
+        for _ in range(n):
             fast = fast.next
-        # if not fast:
-        #     return head.next
+        if not fast: # because largest n is only length of the linked list for this question
+            return head.next # no stitching done
         while fast.next:
             slow = slow.next
-            fast = fast.next
+            fast = fast.next # pointing to last node
+        # slow.next = fast # this doesnt work since we stop fast and the last node. this wont work if the gap between slow and fast is only 1
         slow.next = slow.next.next
+        return head
         
 
 if __name__ == "__main__":
