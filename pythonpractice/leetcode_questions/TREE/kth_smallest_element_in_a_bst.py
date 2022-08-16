@@ -50,7 +50,7 @@ class Solution():
             if not node:
                 return
             nonlocal count, element
-            reverse_inorder_traversal(node.right, k)
+            reverse_inorder_traversal(node.right, k) # change this to left and it is the kth smallest element
             count += 1
             if count == k:
                 element = node.val

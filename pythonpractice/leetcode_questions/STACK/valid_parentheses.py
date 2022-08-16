@@ -13,7 +13,7 @@ def solution(s):
         if bracket in opening_brackets:
             stack.append(bracket)
         else: # is closing bracket
-            if not stack:
+            if not stack: # edge case if the first one is a closing bracket and u try to pop from empty stack, will have error
                 return False
             prev_bracket = stack.pop()
             if bracket != opening_brackets[prev_bracket]:

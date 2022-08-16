@@ -4,6 +4,8 @@ from curses.ascii import isalnum
 # another way is to use 2 pointers from the front and back and check for equality
 # both is O(N) but the second method can exit early and allows for slightly faster time
 # if we want to count the number of palindromes, we can also start from the middle and go outwards
+# # if we start from inside out, we need to account for odd and even length strings
+# but if we do from outside in, we just make sure left ptr doesnt pass right ptr
 
 sample_strings = [
     "A man, a plan, a canal: Panama", # true
