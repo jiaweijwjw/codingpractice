@@ -32,9 +32,9 @@ class Solution():
         return self._dfs_traverse(self.root_tree1, self.root_tree2)
 
     def _dfs_traverse(self, node1, node2):
-        if not node1 and not node2:
+        if not node1 and not node2: # check this first else we cannto access the .val property of a node
             return True # MUST return true, if not it will just return None
-        elif not node1 or not node2:
+        elif not node1 or not node2: # since we already checked the both None condition above, this case will check either node1 is None or node2 is None
             return False
         elif node1.val != node2.val:
             return False
