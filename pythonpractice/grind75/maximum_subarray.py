@@ -12,7 +12,7 @@ class Solution():
         curr_sum = max_sum = arr[0]
         while right <= len(arr)-1:
             sum = curr_sum + arr[right]
-            if sum < arr[right]: # this part need to wrte out to see
+            if sum < arr[right]: # this part need to write out to see
                 left = right
                 curr_sum = arr[left]
                 right = left + 1

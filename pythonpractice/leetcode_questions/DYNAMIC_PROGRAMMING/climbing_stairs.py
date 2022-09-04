@@ -52,7 +52,7 @@ class Solution():
 
 if __name__ == "__main__":
     solution = Solution()
-    steps = [2,3,4] # 2,3,5
+    steps = [2,3,4,5] # 2,3,5
     for n in steps:
         print(solution.get_num_of_distinct_ways_recursive(n))
         print(solution.get_num_of_distinct_ways_recursive_with_memoization(n))

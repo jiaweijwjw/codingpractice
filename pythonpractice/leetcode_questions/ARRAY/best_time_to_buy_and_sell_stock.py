@@ -5,7 +5,7 @@ prices = [7, 1 ,5, 3, 6, 4]
 # when we start doing this question, we will first think of it as a very simple question of finding the max and min
 # then getting the difference between them
 # however, since we only want profits, meaning if the max is before the min, this solution will not work out.
-# this simple solution is coded out at the end of this script.
+# this simple naive solution is coded out at the end of this script.
 
 # if we dont know what method to use for this, we can try to recall what kind of methods can array questions use.
 # this looks like a 2 pointers method to keep track of the min and current.
