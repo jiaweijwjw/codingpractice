@@ -24,7 +24,10 @@ class Solution():
             return self.binary_search(arr, start, end, mid, target)
 
     # O(1) space complexity
-    def binary_search_iterative(self, arr, start, end, mid, target):
+    # this method can be used in multiple different scenarios, just have to modify it
+    def binary_search_iterative(self, arr, target):
+        start = 0
+        end = len(arr)-1
         while start <= end: # notice that this includes the equal case
             mid = (start+end)//2
             if arr[mid] == target:
@@ -41,4 +44,4 @@ if __name__ == "__main__":
     # outputs: 4, -1
     for nums, target in inputs:
         print(solution.binary_search(nums, 0, len(nums)-1, (len(nums)-1)//2, target))
-        print(solution.binary_search_iterative(nums, 0, len(nums)-1, (len(nums)-1)//2, target))
+        print(solution.binary_search_iterative(nums, target))
