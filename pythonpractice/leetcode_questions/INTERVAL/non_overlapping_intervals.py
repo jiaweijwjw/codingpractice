@@ -14,7 +14,7 @@ class Solution():
             if left >= end:
                 end = right # extend the furthest end
             else:
-                count += 1
+                count += 1 # increase count when an interval is skipped as we are counting number of intervals to remove.
         return count
 
 if __name__ == "__main__":

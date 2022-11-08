@@ -4,7 +4,7 @@ class Solution():
     def __init__(self) -> None:
         pass
 
-    def get_top_f_frequent_elements(self, nums, k):
+    def get_top_k_frequent_elements(self, nums, k):
         heap = []
         count_dict = {}
         for num in nums:
@@ -18,4 +18,4 @@ if __name__ == "__main__":
     solution = Solution()
     nums = [1,1,1,2,2,3]
     k = 2
-    print(solution.get_top_f_frequent_elements(nums, k))
+    print(solution.get_top_k_frequent_elements(nums, k))

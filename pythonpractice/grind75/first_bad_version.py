@@ -30,7 +30,7 @@ class Solution():
                 return binary_search(start, end, mid)
         return binary_search(1, n, (n+1)//2)
 
-    # the above version is easy to understand, just more edgge cases. but notice that whilee checking the values,
+    # the above version is easy to understand, just more edge cases. but notice that while checking the values,
     # we are checking left and right. is there a way that we can reduce this to just checking the mid value?
     # then we can halve the current number of API calls to is_bad_version()
 
