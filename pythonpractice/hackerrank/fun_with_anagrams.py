@@ -14,33 +14,37 @@ import sys
 # The function is expected to return a STRING_ARRAY.
 # The function accepts STRING_ARRAY text as parameter.
 #
-import string 
-def calc_val(word):
-    val = 0
-    # the val could be too large, maybe we can try using dict. since only a-z, the dict can be considered a constant
-    for char in word:
-        if char in string.ascii_letters:
-            val += ord(char)-ord('a')
-    return val
 
-# def get_char_dict(word):
-#     char_dict = {}
+# import string 
+# def calc_val(word):
+#     val = 0
 #     for char in word:
-#         if char not in char_dict:
-#             char_dict[char] = 1
-#         else:
-#             char_dict[char] += 1
-
+#         if char in string.ascii_letters:
+#             val += ord(char)-ord('a')
+#     return val
+    
+# def funWithAnagrams(text):
+#     # Write your code here
+#     checked = {}
+#     for word in text:
+#         val = calc_val(word)
+#         if val not in checked:
+#             checked[val] = word
+#     ans_dict = dict(sorted(checked.items(), key=lambda item: item[1]))
+#     return [v for k, v in ans_dict.items()]
+    
 def funWithAnagrams(text):
     # Write your code here
-    checked = {}
+    res = []
+    checked = set()
     for word in text:
-        val = calc_val(word)
-        if val not in checked:
-            checked[val] = word
-    ans_dict = dict(sorted(checked.items(), key=lambda item: item[1]))
-    return [v for k, v in ans_dict.items()]
-
+        sorted_word = ''.join(sorted(word)) # can replace this with frequency counting for faster time complexity and lesser space complexity
+        if sorted_word not in checked:
+            checked.add(sorted_word)
+            res.append(word)
+    res.sort()
+    return res
+    
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 

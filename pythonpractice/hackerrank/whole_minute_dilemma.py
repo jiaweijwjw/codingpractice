@@ -15,6 +15,34 @@ import sys
 # The function accepts INTEGER_ARRAY songs as parameter.
 #
 
+# after trying that the O(N^2) solution doesnt work below (by checking every pair combination),
+# since it is too slow, then the only way is O(N) which is to try to solve it similar to two sums method which is what i initially thought of
+# using a counter is just a more convenient way of using dictionary to count stuff
+# the trick here is to understand the mathematics behind
+# first, we must understand that we are trying to find a song1 + song1 which is a multiple of 60
+# this means that (song1 + song2)%60 == 0
+# by splitting
+from collections import Counter
+def playlist(songs):
+    count = 0
+    songs_counter = Counter()
+    # the idea is that any multiple of 60
+    for song in songs:
+        other_song = -song % 60
+        count += songs_counter[other_song]
+        songs_counter[song % 60] += 1 # store only the reduced time
+    return count
+    
+# def playlist(songs):
+#     # Write your code here
+#     songs_counter = {}
+#     count = 0
+#     for song in songs:
+#         other_song = -song%60
+#         count += songs_counter.get(0, other_song)
+#         songs_counter[song%60] += 1
+#     return count
+ 
 # valid_sum = [i*60 for i in range(1, 17)]
 # print(valid_sum)
 
@@ -48,17 +76,17 @@ import sys
 #     songs_set.remove(song)
 # return count
         
-def is_valid_pair(val1, val2):
-    return (val1+val2)%60 == 0
+# def is_valid_pair(val1, val2):
+#     return (val1+val2)%60 == 0
 
-def playlist(songs):
-    count = 0
-    # Write your code here
-    for i in range(len(songs)):
-        for j in range(i+1, len(songs)): # for the remaining on the right
-            if is_valid_pair(songs[i], songs[j]):
-                count += 1
-    return count
+# def playlist(songs):
+#     count = 0
+#     # Write your code here
+#     for i in range(len(songs)):
+#         for j in range(i+1, len(songs)): # for the remaining on the right
+#             if is_valid_pair(songs[i], songs[j]):
+#                 count += 1
+#     return count
 
 # below does the same as above. what we need to do is do it faster than the combinations number of checks
 # from itertools import combinations
@@ -69,7 +97,7 @@ def playlist(songs):
 #         if sum(combi)%60 == 0:
 #             count += 1
 #     return count
-
+ 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
